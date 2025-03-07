@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Illuminum - Predator-Prey Network Visualization</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Roboto+Serif:ital,wght@0,400;0,500;1,400&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Primary Colors */
+            --dark-purple: #2D217A;
+            --sunrise-yellow: #F2AF29;
+            --glacier-blue: #2FACBC;
+            --grass-green: #4DA02D;
+            --flaming-red: #F25C33;
+            
+            /* Neutral Colors */
+            --carbon-black: #1C1D20;
+            --medium-grey: #4B4B4B;
+            --light-grey: #D2D2D2;
+            --pure-white: #FFFFFF;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--carbon-black);
+            background-color: var(--light-grey);
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Kanit', sans-serif;
+            font-weight: 400;
+        }
+        
+        .subtitle {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+        }
+        
+        .code {
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .print-text {
+            font-family: 'Roboto Serif', serif;
+        }
+        
+        .node:hover circle {
+            fill-opacity: 0.8;
+            stroke-width: 2px;
+        }
+        
+        .link {
+            transition: stroke-opacity 0.3s;
+        }
+        
+        .link:hover {
+            stroke-opacity: 1;
+        }
+        
+        .btn-primary {
+            background-color: var(--dark-purple);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3D2A9A;
+        }
+        
+        .btn-secondary {
+            background-color: var(--glacier-blue);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #3BBCCC;
+        }
+        
+        .header-gradient {
+            background: linear-gradient(to right, var(--dark-purple), var(--glacier-blue));
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-gradient py-4">
+        <div class="container mx-auto px-4 flex items-center">
+            <div class="mr-4">
+                <!-- Illuminum logo placeholder -->
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Simplified logo based on brand manual -->
+                    <path d="M5 20 L15 10 L25 20" stroke="white" stroke-width="2" />
+                    <path d="M10 25 L20 15 L30 25" stroke="white" stroke-width="2" />
+                    <path d="M15 30 L25 20 L35 30" stroke="white" stroke-width="2" />
+                    <path d="M20 35 L30 25 L40 35" stroke="white" stroke-width="2" />
+                </svg>
+            </div>
+            <h1 class="text-xl">Illuminum</h1>
+        </div>
+    </div>
+    <div id="root" class="min-h-screen"></div>
+    <script src="bundle.js"></script>
+</body>
+</html>

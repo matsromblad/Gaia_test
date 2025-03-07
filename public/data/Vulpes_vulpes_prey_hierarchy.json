@@ -1,0 +1,1609 @@
+{
+  "name": "Vulpes vulpes (Vulpes vulpes)",
+  "children": [
+    {
+      "name": "Animalia",
+      "children": [
+        {
+          "name": "Leporidae",
+          "children": [
+            {
+              "name": "Oryctolagus cuniculus (Oryctolagus cuniculus)",
+              "value": 10
+            },
+            {
+              "name": "Oryctolagus cuniculus (Oryctolagus cuniculus)",
+              "value": 10
+            },
+            {
+              "name": "Lepus americanus (Lepus americanus)",
+              "value": 8
+            },
+            {
+              "name": "Lepus americanus (Lepus americanus)",
+              "value": 8
+            },
+            {
+              "name": "Sylvilagus floridanus (Sylvilagus floridanus)",
+              "value": 6
+            },
+            {
+              "name": "Sylvilagus floridanus (Sylvilagus floridanus)",
+              "value": 6
+            },
+            {
+              "name": "Lepus europaeus (Lepus europaeus)",
+              "value": 4
+            },
+            {
+              "name": "Lepus europaeus (Lepus europaeus)",
+              "value": 4
+            },
+            {
+              "name": "Lepus tolai (Lepus tolai)",
+              "value": 2
+            },
+            {
+              "name": "Lepus timidus (Lepus timidus)",
+              "value": 2
+            },
+            {
+              "name": "Lepus capensis (Lepus capensis)",
+              "value": 2
+            },
+            {
+              "name": "Lepus (Lepus)",
+              "value": 2
+            },
+            {
+              "name": "Leporidae (Leporidae)",
+              "value": 2
+            },
+            {
+              "name": "Sylvilagus (Sylvilagus)",
+              "value": 2
+            },
+            {
+              "name": "Lepus arcticus (Lepus arcticus)",
+              "value": 2
+            },
+            {
+              "name": "Lepus oiostolus (Lepus oiostolus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Sciuridae",
+          "children": [
+            {
+              "name": "Sciuridae (Sciuridae)",
+              "value": 8
+            },
+            {
+              "name": "Sciuridae (Sciuridae)",
+              "value": 8
+            },
+            {
+              "name": "Tamias striatus (Tamias striatus)",
+              "value": 6
+            },
+            {
+              "name": "Marmota monax (Marmota monax)",
+              "value": 6
+            },
+            {
+              "name": "Tamias striatus (Tamias striatus)",
+              "value": 6
+            },
+            {
+              "name": "Marmota himalayana (Marmota himalayana)",
+              "value": 4
+            },
+            {
+              "name": "Urocitellus armatus (Urocitellus armatus)",
+              "value": 4
+            },
+            {
+              "name": "Sciurus niger (Sciurus niger)",
+              "value": 4
+            },
+            {
+              "name": "Tamiasciurus hudsonicus (Tamiasciurus hudsonicus)",
+              "value": 4
+            },
+            {
+              "name": "Sciurus vulgaris (Sciurus vulgaris)",
+              "value": 4
+            },
+            {
+              "name": "Urocitellus parryii (Urocitellus parryii)",
+              "value": 4
+            },
+            {
+              "name": "Sciurus carolinensis (Sciurus carolinensis)",
+              "value": 4
+            },
+            {
+              "name": "Urocitellus parryii (Urocitellus parryii)",
+              "value": 4
+            },
+            {
+              "name": "Urocitellus armatus (Urocitellus armatus)",
+              "value": 4
+            },
+            {
+              "name": "Sciurus vulgaris (Sciurus vulgaris)",
+              "value": 4
+            },
+            {
+              "name": "Tamiasciurus hudsonicus (Tamiasciurus hudsonicus)",
+              "value": 4
+            },
+            {
+              "name": "Sciurus niger (Sciurus niger)",
+              "value": 4
+            },
+            {
+              "name": "Marmota himalayana (Marmota himalayana)",
+              "value": 4
+            },
+            {
+              "name": "Neosciurus carolinensis (Neosciurus carolinensis)",
+              "value": 2
+            },
+            {
+              "name": "Tamiasciurus hudsonicus fremonti (Tamiasciurus hudsonicus fremonti)",
+              "value": 2
+            },
+            {
+              "name": "Marmota marmota (Marmota marmota)",
+              "value": 2
+            },
+            {
+              "name": "Urocitellus richardsonii (Urocitellus richardsonii)",
+              "value": 2
+            },
+            {
+              "name": "Urocitellus columbianus (Urocitellus columbianus)",
+              "value": 2
+            },
+            {
+              "name": "Cynomys ludovicianus (Cynomys ludovicianus)",
+              "value": 2
+            },
+            {
+              "name": "Tamias amoenus (Tamias amoenus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Didelphidae",
+          "children": [
+            {
+              "name": "Didelphis virginiana (Didelphis virginiana)",
+              "value": 6
+            },
+            {
+              "name": "Didelphis virginiana (Didelphis virginiana)",
+              "value": 6
+            }
+          ]
+        },
+        {
+          "name": "Unknown",
+          "children": [
+            {
+              "name": "Anseriformes (Anseriformes)",
+              "value": 6
+            },
+            {
+              "name": "Mammalia (Mammalia)",
+              "value": 6
+            },
+            {
+              "name": "Rodentia (Rodentia)",
+              "value": 6
+            },
+            {
+              "name": "Rodentia (Rodentia)",
+              "value": 6
+            },
+            {
+              "name": "Mammalia (Mammalia)",
+              "value": 6
+            },
+            {
+              "name": "Anseriformes (Anseriformes)",
+              "value": 6
+            },
+            {
+              "name": "Aves (Aves)",
+              "value": 4
+            },
+            {
+              "name": "Aves (Aves)",
+              "value": 4
+            },
+            {
+              "name": "Lagomorpha (Lagomorpha)",
+              "value": 2
+            },
+            {
+              "name": "Anguilliformes (Anguilliformes)",
+              "value": 2
+            },
+            {
+              "name": "Orthoptera (Orthoptera)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Cricetidae",
+          "children": [
+            {
+              "name": "Cricetidae (Cricetidae)",
+              "value": 6
+            },
+            {
+              "name": "Ondatra zibethicus (Ondatra zibethicus)",
+              "value": 6
+            },
+            {
+              "name": "Cricetidae (Cricetidae)",
+              "value": 6
+            },
+            {
+              "name": "Ondatra zibethicus (Ondatra zibethicus)",
+              "value": 6
+            },
+            {
+              "name": "Cricetus cricetus (Cricetus cricetus)",
+              "value": 4
+            },
+            {
+              "name": "Arvicola amphibius (Arvicola amphibius)",
+              "value": 4
+            },
+            {
+              "name": "Microtus agrestis (Microtus agrestis)",
+              "value": 4
+            },
+            {
+              "name": "Peromyscus (Peromyscus)",
+              "value": 4
+            },
+            {
+              "name": "Microtus (Microtus)",
+              "value": 4
+            },
+            {
+              "name": "Microtus (Microtus)",
+              "value": 4
+            },
+            {
+              "name": "Cricetus cricetus (Cricetus cricetus)",
+              "value": 4
+            },
+            {
+              "name": "Arvicola amphibius (Arvicola amphibius)",
+              "value": 4
+            },
+            {
+              "name": "Peromyscus (Peromyscus)",
+              "value": 4
+            },
+            {
+              "name": "Microtus agrestis (Microtus agrestis)",
+              "value": 4
+            },
+            {
+              "name": "Dicrostonyx torquatus (Dicrostonyx torquatus)",
+              "value": 2
+            },
+            {
+              "name": "Lemmus lemmus (Lemmus lemmus)",
+              "value": 2
+            },
+            {
+              "name": "Scapteromys tumidus (Scapteromys tumidus)",
+              "value": 2
+            },
+            {
+              "name": "Arvicola (Arvicola)",
+              "value": 2
+            },
+            {
+              "name": "Alexandromys oeconomus (Alexandromys oeconomus)",
+              "value": 2
+            },
+            {
+              "name": "Myodes glareolus (Myodes glareolus)",
+              "value": 2
+            },
+            {
+              "name": "Microtus arvalis (Microtus arvalis)",
+              "value": 2
+            },
+            {
+              "name": "Arvicolinae (Arvicolinae)",
+              "value": 2
+            },
+            {
+              "name": "Peromyscus maniculatus (Peromyscus maniculatus)",
+              "value": 2
+            },
+            {
+              "name": "Microtus pennsylvanicus (Microtus pennsylvanicus)",
+              "value": 2
+            },
+            {
+              "name": "Cricetulus spp. (Cricetulus spp.)",
+              "value": 2
+            },
+            {
+              "name": "Neodon irene (Neodon irene)",
+              "value": 2
+            },
+            {
+              "name": "Neodon fuscus (Neodon fuscus)",
+              "value": 2
+            },
+            {
+              "name": "Microtus oeconomus (Microtus oeconomus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Canidae",
+          "children": [
+            {
+              "name": "Vulpes vulpes (Vulpes vulpes)",
+              "value": 6
+            },
+            {
+              "name": "Vulpes vulpes (Vulpes vulpes)",
+              "value": 6
+            },
+            {
+              "name": "Vulpes lagopus (Vulpes lagopus)",
+              "value": 2
+            },
+            {
+              "name": "Vulpes corsac (Vulpes corsac)",
+              "value": 2
+            },
+            {
+              "name": "Canis lupus (Canis lupus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Muridae",
+          "children": [
+            {
+              "name": "Leggadina forresti (Leggadina forresti)",
+              "value": 4
+            },
+            {
+              "name": "Notomys alexis (Notomys alexis)",
+              "value": 4
+            },
+            {
+              "name": "Rattus villosissimus (Rattus villosissimus)",
+              "value": 4
+            },
+            {
+              "name": "Rattus fuscipes (Rattus fuscipes)",
+              "value": 4
+            },
+            {
+              "name": "Pseudomys desertor (Pseudomys desertor)",
+              "value": 4
+            },
+            {
+              "name": "Rattus norvegicus (Rattus norvegicus)",
+              "value": 4
+            },
+            {
+              "name": "Mus musculus (Mus musculus)",
+              "value": 4
+            },
+            {
+              "name": "Rattus norvegicus (Rattus norvegicus)",
+              "value": 4
+            },
+            {
+              "name": "Rattus fuscipes (Rattus fuscipes)",
+              "value": 4
+            },
+            {
+              "name": "Mus musculus (Mus musculus)",
+              "value": 4
+            },
+            {
+              "name": "Mus spretus (Mus spretus)",
+              "value": 2
+            },
+            {
+              "name": "Rattus rattus (Rattus rattus)",
+              "value": 2
+            },
+            {
+              "name": "Apodemus sylvaticus (Apodemus sylvaticus)",
+              "value": 2
+            },
+            {
+              "name": "Pseudomys hermannsburgensis (Pseudomys hermannsburgensis)",
+              "value": 2
+            },
+            {
+              "name": "Muridae (Muridae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Geomyidae",
+          "children": [
+            {
+              "name": "Thomomys talpoides (Thomomys talpoides)",
+              "value": 4
+            },
+            {
+              "name": "Thomomys talpoides (Thomomys talpoides)",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "name": "Phasianidae",
+          "children": [
+            {
+              "name": "Phasianus colchicus (Phasianus colchicus)",
+              "value": 4
+            },
+            {
+              "name": "Lagopus muta (Lagopus muta)",
+              "value": 4
+            },
+            {
+              "name": "Lyrurus tetrix (Lyrurus tetrix)",
+              "value": 4
+            },
+            {
+              "name": "Lagopus muta (Lagopus muta)",
+              "value": 4
+            },
+            {
+              "name": "Lyrurus tetrix (Lyrurus tetrix)",
+              "value": 4
+            },
+            {
+              "name": "Phasianus colchicus (Phasianus colchicus)",
+              "value": 4
+            },
+            {
+              "name": "Bonasa umbellus (Bonasa umbellus)",
+              "value": 2
+            },
+            {
+              "name": "Dendragapus obscurus (Dendragapus obscurus)",
+              "value": 2
+            },
+            {
+              "name": "Perdix perdix (Perdix perdix)",
+              "value": 2
+            },
+            {
+              "name": "Alectoris chukar (Alectoris chukar)",
+              "value": 2
+            },
+            {
+              "name": "Centrocercus urophasianus (Centrocercus urophasianus)",
+              "value": 2
+            },
+            {
+              "name": "Tetrao (Tetrao)",
+              "value": 2
+            },
+            {
+              "name": "Tetraoninae (Tetraoninae)",
+              "value": 2
+            },
+            {
+              "name": "Lagopus lagopus (Lagopus lagopus)",
+              "value": 2
+            },
+            {
+              "name": "Alectoris rufa (Alectoris rufa)",
+              "value": 2
+            },
+            {
+              "name": "Phasianidae (Phasianidae)",
+              "value": 2
+            },
+            {
+              "name": "Meleagris gallopavo (Meleagris gallopavo)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Pseudocheiridae",
+          "children": [
+            {
+              "name": "Pseudocheirus peregrinus (Pseudocheirus peregrinus)",
+              "value": 4
+            },
+            {
+              "name": "Pseudocheirus peregrinus (Pseudocheirus peregrinus)",
+              "value": 4
+            },
+            {
+              "name": "Pseudocheiridae (Pseudocheiridae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Cervidae",
+          "children": [
+            {
+              "name": "Alces alces (Alces alces)",
+              "value": 4
+            },
+            {
+              "name": "Odocoileus hemionus (Odocoileus hemionus)",
+              "value": 4
+            },
+            {
+              "name": "Alces alces (Alces alces)",
+              "value": 4
+            },
+            {
+              "name": "Odocoileus hemionus (Odocoileus hemionus)",
+              "value": 4
+            },
+            {
+              "name": "Dama dama (Dama dama)",
+              "value": 2
+            },
+            {
+              "name": "Capreolus capreolus (Capreolus capreolus)",
+              "value": 2
+            },
+            {
+              "name": "Rangifer tarandus (Rangifer tarandus)",
+              "value": 2
+            },
+            {
+              "name": "Cervidae (Cervidae)",
+              "value": 2
+            },
+            {
+              "name": "Cervus elaphus (Cervus elaphus)",
+              "value": 2
+            },
+            {
+              "name": "Odocoileus virginianus (Odocoileus virginianus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Charadriidae",
+          "children": [
+            {
+              "name": "Charadriidae (Charadriidae)",
+              "value": 4
+            },
+            {
+              "name": "Charadriidae (Charadriidae)",
+              "value": 4
+            },
+            {
+              "name": "Peltohyas australis (Peltohyas australis)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Phalangeridae",
+          "children": [
+            {
+              "name": "Trichosurus vulpecula (Trichosurus vulpecula)",
+              "value": 4
+            },
+            {
+              "name": "Trichosurus vulpecula (Trichosurus vulpecula)",
+              "value": 4
+            },
+            {
+              "name": "Trichosurus (Trichosurus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Procyonidae",
+          "children": [
+            {
+              "name": "Procyon lotor (Procyon lotor)",
+              "value": 4
+            },
+            {
+              "name": "Procyon lotor (Procyon lotor)",
+              "value": 4
+            },
+            {
+              "name": "Bassariscus astutus (Bassariscus astutus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Phocidae",
+          "children": [
+            {
+              "name": "Pusa hispida (Pusa hispida)",
+              "value": 4
+            },
+            {
+              "name": "Pusa hispida (Pusa hispida)",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "name": "Myocastoridae",
+          "children": [
+            {
+              "name": "Myocastor coypus (Myocastor coypus)",
+              "value": 4
+            },
+            {
+              "name": "Myocastor coypus (Myocastor coypus)",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "name": "Felidae",
+          "children": [
+            {
+              "name": "Felis catus (Felis catus)",
+              "value": 4
+            },
+            {
+              "name": "Felidae (Felidae)",
+              "value": 2
+            },
+            {
+              "name": "Lynx (Lynx)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Talpidae",
+          "children": [
+            {
+              "name": "Talpa europaea (Talpa europaea)",
+              "value": 4
+            },
+            {
+              "name": "Condylura cristata (Condylura cristata)",
+              "value": 2
+            },
+            {
+              "name": "Talpidae (Talpidae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Chrysomelidae",
+          "children": [
+            {
+              "name": "Eutheria (Eutheria)",
+              "value": 4
+            },
+            {
+              "name": "Timarcha tenebricosa (Timarcha tenebricosa)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Lithobiidae",
+          "children": [
+            {
+              "name": "Lithobius piceus (Lithobius piceus)",
+              "value": 4
+            },
+            {
+              "name": "Lithobius piceus (Lithobius piceus)",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "name": "Staphylinidae",
+          "children": [
+            {
+              "name": "Staphylinus erythropterus (Staphylinus erythropterus)",
+              "value": 4
+            },
+            {
+              "name": "Staphylinus erythropterus (Staphylinus erythropterus)",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "name": "Haemopidae",
+          "children": [
+            {
+              "name": "Haemopis sanguisuga (Haemopis sanguisuga)",
+              "value": 4
+            },
+            {
+              "name": "Haemopis sanguisuga (Haemopis sanguisuga)",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "name": "Tetrigidae",
+          "children": [
+            {
+              "name": "Tetrix subulata (Tetrix subulata)",
+              "value": 4
+            },
+            {
+              "name": "Tetrix subulata (Tetrix subulata)",
+              "value": 4
+            }
+          ]
+        },
+        {
+          "name": "Dasyuridae",
+          "children": [
+            {
+              "name": "Antechinus arktos (Antechinus arktos)",
+              "value": 2
+            },
+            {
+              "name": "Dasyurus viverrinus (Dasyurus viverrinus)",
+              "value": 2
+            },
+            {
+              "name": "Dasyurus (Dasyurus)",
+              "value": 2
+            },
+            {
+              "name": "Ningaui ridei (Ningaui ridei)",
+              "value": 2
+            },
+            {
+              "name": "Sminthopsis hirtipes (Sminthopsis hirtipes)",
+              "value": 2
+            },
+            {
+              "name": "Sminthopsis crassicaudata (Sminthopsis crassicaudata)",
+              "value": 2
+            },
+            {
+              "name": "Sminthopsis youngsoni (Sminthopsis youngsoni)",
+              "value": 2
+            },
+            {
+              "name": "Sminthopsis macroura (Sminthopsis macroura)",
+              "value": 2
+            },
+            {
+              "name": "Dasycercus blythi (Dasycercus blythi)",
+              "value": 2
+            },
+            {
+              "name": "Dasycercus cristicauda (Dasycercus cristicauda)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Elephantidae",
+          "children": [
+            {
+              "name": "Mammuthus primigenius (Mammuthus primigenius)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Potoroidae",
+          "children": [
+            {
+              "name": "Potoroidae (Potoroidae)",
+              "value": 2
+            },
+            {
+              "name": "Bettongia penicillata (Bettongia penicillata)",
+              "value": 2
+            },
+            {
+              "name": "Potorous tridactylus (Potorous tridactylus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Laniidae",
+          "children": [
+            {
+              "name": "Lanius bucephalus (Lanius bucephalus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Chelidae",
+          "children": [
+            {
+              "name": "Chelodina expansa (Chelodina expansa)",
+              "value": 2
+            },
+            {
+              "name": "Emydura macquarii (Emydura macquarii)",
+              "value": 2
+            },
+            {
+              "name": "Chelodina longicollis (Chelodina longicollis)",
+              "value": 2
+            },
+            {
+              "name": "Chelodina oblonga (Chelodina oblonga)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Ochotonidae",
+          "children": [
+            {
+              "name": "Ochotona roylei (Ochotona roylei)",
+              "value": 2
+            },
+            {
+              "name": "Ochotona curzoniae (Ochotona curzoniae)",
+              "value": 2
+            },
+            {
+              "name": "Ochotona (Ochotona)",
+              "value": 2
+            },
+            {
+              "name": "Ochotona ladacensis (Ochotona ladacensis)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Otididae",
+          "children": [
+            {
+              "name": "Chlamydotis undulata (Chlamydotis undulata)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Moschidae",
+          "children": [
+            {
+              "name": "Moschus chrysogaster (Moschus chrysogaster)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Gekkonidae",
+          "children": [
+            {
+              "name": "Christinus marmoratus (Christinus marmoratus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Viverridae",
+          "children": [
+            {
+              "name": "Viverra tangalunga (Viverra tangalunga)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Cryptobranchidae",
+          "children": [
+            {
+              "name": "Andrias davidianus (Andrias davidianus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Bovidae",
+          "children": [
+            {
+              "name": "Capra aegagrus (Capra aegagrus)",
+              "value": 2
+            },
+            {
+              "name": "Capricornis thar (Capricornis thar)",
+              "value": 2
+            },
+            {
+              "name": "Hemitragus jemlahicus (Hemitragus jemlahicus)",
+              "value": 2
+            },
+            {
+              "name": "Procapra picticaudata (Procapra picticaudata)",
+              "value": 2
+            },
+            {
+              "name": "Procapra przewalskii (Procapra przewalskii)",
+              "value": 2
+            },
+            {
+              "name": "Capra sibirica (Capra sibirica)",
+              "value": 2
+            },
+            {
+              "name": "Ovis ammon (Ovis ammon)",
+              "value": 2
+            },
+            {
+              "name": "Pseudois nayaur (Pseudois nayaur)",
+              "value": 2
+            },
+            {
+              "name": "Ovis (Ovis)",
+              "value": 2
+            },
+            {
+              "name": "Capra hircus (Capra hircus)",
+              "value": 2
+            },
+            {
+              "name": "Ovis ammon polii (Ovis ammon polii)",
+              "value": 2
+            },
+            {
+              "name": "Ovibos moschatus (Ovibos moschatus)",
+              "value": 2
+            },
+            {
+              "name": "Ovis canadensis (Ovis canadensis)",
+              "value": 2
+            },
+            {
+              "name": "Pseudois (Pseudois)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Viperidae",
+          "children": [
+            {
+              "name": "Vipera berus (Vipera berus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Macropodidae",
+          "children": [
+            {
+              "name": "Osphranter robustus (Osphranter robustus)",
+              "value": 2
+            },
+            {
+              "name": "Thylogale billardierii (Thylogale billardierii)",
+              "value": 2
+            },
+            {
+              "name": "Wallabia (Wallabia)",
+              "value": 2
+            },
+            {
+              "name": "Petrogale (Petrogale)",
+              "value": 2
+            },
+            {
+              "name": "Macropus giganteus (Macropus giganteus)",
+              "value": 2
+            },
+            {
+              "name": "Macropus robustus (Macropus robustus)",
+              "value": 2
+            },
+            {
+              "name": "Macropus rufus (Macropus rufus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Scincidae",
+          "children": [
+            {
+              "name": "Morethia boulengeri (Morethia boulengeri)",
+              "value": 2
+            },
+            {
+              "name": "Ctenotus olympicus (Ctenotus olympicus)",
+              "value": 2
+            },
+            {
+              "name": "Eremiascincus richardsonii (Eremiascincus richardsonii)",
+              "value": 2
+            },
+            {
+              "name": "Lerista labialis (Lerista labialis)",
+              "value": 2
+            },
+            {
+              "name": "Tiliqua scincoides (Tiliqua scincoides)",
+              "value": 2
+            },
+            {
+              "name": "Tiliqua rugosa (Tiliqua rugosa)",
+              "value": 2
+            },
+            {
+              "name": "Egernia stokesii (Egernia stokesii)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Ornithorhynchidae",
+          "children": [
+            {
+              "name": "Ornithorhynchus anatinus (Ornithorhynchus anatinus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Threskiornithidae",
+          "children": [
+            {
+              "name": "Platalea leucorodia (Platalea leucorodia)",
+              "value": 2
+            },
+            {
+              "name": "Threskiornis molucca (Threskiornis molucca)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Mustelidae",
+          "children": [
+            {
+              "name": "Martes martes (Martes martes)",
+              "value": 2
+            },
+            {
+              "name": "Martes foina (Martes foina)",
+              "value": 2
+            },
+            {
+              "name": "Mustelidae (Mustelidae)",
+              "value": 2
+            },
+            {
+              "name": "Mustela vison (Mustela vison)",
+              "value": 2
+            },
+            {
+              "name": "Pekania pennanti pennanti (Pekania pennanti pennanti)",
+              "value": 2
+            },
+            {
+              "name": "Mustela altaica (Mustela altaica)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Parulidae",
+          "children": [
+            {
+              "name": "Parulidae (Parulidae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Accipitridae",
+          "children": [
+            {
+              "name": "Accipiter gentilis (Accipiter gentilis)",
+              "value": 2
+            },
+            {
+              "name": "Circus cyaneus (Circus cyaneus)",
+              "value": 2
+            },
+            {
+              "name": "Aquila chrysaetos (Aquila chrysaetos)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Anatidae",
+          "children": [
+            {
+              "name": "Anser anser (Anser anser)",
+              "value": 2
+            },
+            {
+              "name": "Cairina moschata domestica (Cairina moschata domestica)",
+              "value": 2
+            },
+            {
+              "name": "Anatidae (Anatidae)",
+              "value": 2
+            },
+            {
+              "name": "Spatula querquedula (Spatula querquedula)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Columbidae",
+          "children": [
+            {
+              "name": "Columba palumbus (Columba palumbus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Laridae",
+          "children": [
+            {
+              "name": "Larus michahellis (Larus michahellis)",
+              "value": 2
+            },
+            {
+              "name": "Sterna hirundo (Sterna hirundo)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Castoridae",
+          "children": [
+            {
+              "name": "Castoridae (Castoridae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Peramelidae",
+          "children": [
+            {
+              "name": "Peramelidae (Peramelidae)",
+              "value": 2
+            },
+            {
+              "name": "Perameles nasuta (Perameles nasuta)",
+              "value": 2
+            },
+            {
+              "name": "Isoodon obesulus (Isoodon obesulus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Erinaceidae",
+          "children": [
+            {
+              "name": "Erinaceidae (Erinaceidae)",
+              "value": 2
+            },
+            {
+              "name": "Erinaceus roumanicus (Erinaceus roumanicus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Suidae",
+          "children": [
+            {
+              "name": "Sus scrofa (Sus scrofa)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Equidae",
+          "children": [
+            {
+              "name": "Equus kiang (Equus kiang)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Colubridae",
+          "children": [
+            {
+              "name": "Zamenis scalaris (Zamenis scalaris)",
+              "value": 2
+            },
+            {
+              "name": "Thamnophis sirtalis sirtalis (Thamnophis sirtalis sirtalis)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Alcidae",
+          "children": [
+            {
+              "name": "Cepphus grylle (Cepphus grylle)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Petauridae",
+          "children": [
+            {
+              "name": "Petaurus breviceps (Petaurus breviceps)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Dipodidae",
+          "children": [
+            {
+              "name": "Zapus hudsonius (Zapus hudsonius)",
+              "value": 2
+            },
+            {
+              "name": "Eozapus setchuanus (Eozapus setchuanus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Carabidae",
+          "children": [
+            {
+              "name": "Carabus auratus (Carabus auratus)",
+              "value": 2
+            },
+            {
+              "name": "Carabus granulatus (Carabus granulatus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Cardinalidae",
+          "children": [
+            {
+              "name": "Cardinalis cardinalis (Cardinalis cardinalis)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Anguidae",
+          "children": [
+            {
+              "name": "Pseudopus apodus (Pseudopus apodus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Sylviidae",
+          "children": [
+            {
+              "name": "Sylvia atricapilla (Sylvia atricapilla)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Rallidae",
+          "children": [
+            {
+              "name": "Fulica americana (Fulica americana)",
+              "value": 2
+            },
+            {
+              "name": "Gallinula chloropus (Gallinula chloropus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Spalacidae",
+          "children": [
+            {
+              "name": "Myospalax baileyi (Myospalax baileyi)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Diplodactylidae",
+          "children": [
+            {
+              "name": "Rhynchoedura eyerensis (Rhynchoedura eyerensis)",
+              "value": 2
+            },
+            {
+              "name": "Diplodactylus conspicillatus (Diplodactylus conspicillatus)",
+              "value": 2
+            },
+            {
+              "name": "Rhynchoedura ornata (Rhynchoedura ornata)",
+              "value": 2
+            },
+            {
+              "name": "Lucasium stenodactylum (Lucasium stenodactylum)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Typhlopidae",
+          "children": [
+            {
+              "name": "Ramphotyphlops bituberculatis (Ramphotyphlops bituberculatis)",
+              "value": 2
+            },
+            {
+              "name": "Anilios endoterus (Anilios endoterus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Ranidae",
+          "children": [
+            {
+              "name": "Rana temporaria (Rana temporaria)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Acrididae",
+          "children": [
+            {
+              "name": "Stethophyma grossum (Stethophyma grossum)",
+              "value": 2
+            },
+            {
+              "name": "Chorthippus (Chorthippus)",
+              "value": 2
+            },
+            {
+              "name": "Acrididae (Acrididae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Armadillidiidae",
+          "children": [
+            {
+              "name": "Armadillidium opacum (Armadillidium opacum)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Tettigoniidae",
+          "children": [
+            {
+              "name": "Conocephalus fuscus (Conocephalus fuscus)",
+              "value": 2
+            },
+            {
+              "name": "Tettigoniidae (Tettigoniidae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Hylidae",
+          "children": [
+            {
+              "name": "Hyla arborea (Hyla arborea)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Agamidae",
+          "children": [
+            {
+              "name": "Tympanocryptis intima (Tympanocryptis intima)",
+              "value": 2
+            },
+            {
+              "name": "Moloch horridus (Moloch horridus)",
+              "value": 2
+            },
+            {
+              "name": "Tympanocryptis tetraporophora (Tympanocryptis tetraporophora)",
+              "value": 2
+            },
+            {
+              "name": "Ctenophorus pictus (Ctenophorus pictus)",
+              "value": 2
+            },
+            {
+              "name": "Pogona vitticeps (Pogona vitticeps)",
+              "value": 2
+            },
+            {
+              "name": "Ctenophorus nuchalis (Ctenophorus nuchalis)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Pygopodidae",
+          "children": [
+            {
+              "name": "Pygopus nigriceps (Pygopus nigriceps)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Limnodynastidae",
+          "children": [
+            {
+              "name": "Neobatrachus sudelli (Neobatrachus sudelli)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Notoryctidae",
+          "children": [
+            {
+              "name": "Notoryctes typhlops (Notoryctes typhlops)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Empididae",
+          "children": [
+            {
+              "name": "Caelifera (Caelifera)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Limacidae",
+          "children": [
+            {
+              "name": "Limacidae (Limacidae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Tipulidae",
+          "children": [
+            {
+              "name": "Tipulidae (Tipulidae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Camelidae",
+          "children": [
+            {
+              "name": "Camelus dromedarius (Camelus dromedarius)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Dromaiidae",
+          "children": [
+            {
+              "name": "Dromaius novaehollandiae (Dromaius novaehollandiae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Estrildidae",
+          "children": [
+            {
+              "name": "Taeniopygia guttata (Taeniopygia guttata)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Salamandridae",
+          "children": [
+            {
+              "name": "Triturus (Triturus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Varanidae",
+          "children": [
+            {
+              "name": "Varanus gouldii (Varanus gouldii)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Psittacidae",
+          "children": [
+            {
+              "name": "Melopsittacus undulatus (Melopsittacus undulatus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Lumbricidae",
+          "children": [
+            {
+              "name": "Lumbricidae (Lumbricidae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Elateridae",
+          "children": [
+            {
+              "name": "Elateridae (Elateridae)",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

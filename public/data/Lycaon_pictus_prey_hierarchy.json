@@ -1,0 +1,268 @@
+{
+  "name": "Lycaon pictus (Lycaon pictus)",
+  "children": [
+    {
+      "name": "Animalia",
+      "children": [
+        {
+          "name": "Bovidae",
+          "children": [
+            {
+              "name": "Connochaetes taurinus (Connochaetes taurinus)",
+              "value": 8
+            },
+            {
+              "name": "Aepyceros melampus (Aepyceros melampus)",
+              "value": 8
+            },
+            {
+              "name": "Aepyceros melampus (Aepyceros melampus)",
+              "value": 8
+            },
+            {
+              "name": "Connochaetes taurinus (Connochaetes taurinus)",
+              "value": 8
+            },
+            {
+              "name": "Aepyceros melampus (Aepyceros melampus)",
+              "value": 8
+            },
+            {
+              "name": "Aepyceros melampus melampus (Aepyceros melampus melampus)",
+              "value": 4
+            },
+            {
+              "name": "Kobus vardonii (Kobus vardonii)",
+              "value": 4
+            },
+            {
+              "name": "Tragelaphus strepsiceros (Tragelaphus strepsiceros)",
+              "value": 4
+            },
+            {
+              "name": "Nanger granti (Nanger granti)",
+              "value": 4
+            },
+            {
+              "name": "Tragelaphus scriptus (Tragelaphus scriptus)",
+              "value": 4
+            },
+            {
+              "name": "Kobus vardonii (Kobus vardonii)",
+              "value": 4
+            },
+            {
+              "name": "Alcelaphus buselaphus (Alcelaphus buselaphus)",
+              "value": 4
+            },
+            {
+              "name": "Tragelaphus strepsiceros (Tragelaphus strepsiceros)",
+              "value": 4
+            },
+            {
+              "name": "Kobus ellipsiprymnus (Kobus ellipsiprymnus)",
+              "value": 4
+            },
+            {
+              "name": "Redunca redunca (Redunca redunca)",
+              "value": 4
+            },
+            {
+              "name": "Ourebia ourebi (Ourebia ourebi)",
+              "value": 4
+            },
+            {
+              "name": "Ourebia ourebi (Ourebia ourebi)",
+              "value": 4
+            },
+            {
+              "name": "Alcelaphus buselaphus (Alcelaphus buselaphus)",
+              "value": 4
+            },
+            {
+              "name": "Redunca redunca (Redunca redunca)",
+              "value": 4
+            },
+            {
+              "name": "Tragelaphus scriptus (Tragelaphus scriptus)",
+              "value": 4
+            },
+            {
+              "name": "Kobus ellipsiprymnus (Kobus ellipsiprymnus)",
+              "value": 4
+            },
+            {
+              "name": "Nanger granti (Nanger granti)",
+              "value": 4
+            },
+            {
+              "name": "Madoqua thomasi (Madoqua thomasi)",
+              "value": 2
+            },
+            {
+              "name": "Connochaetes taurinus mearnsi (Connochaetes taurinus mearnsi)",
+              "value": 2
+            },
+            {
+              "name": "Tragelaphus scriptus sylvaticus (Tragelaphus scriptus sylvaticus)",
+              "value": 2
+            },
+            {
+              "name": "Tragelaphus imberbis (Tragelaphus imberbis)",
+              "value": 2
+            },
+            {
+              "name": "Beatragus hunteri (Beatragus hunteri)",
+              "value": 2
+            },
+            {
+              "name": "Alcelaphus buselaphus cokii (Alcelaphus buselaphus cokii)",
+              "value": 2
+            },
+            {
+              "name": "Sylvicapra grimmia (Sylvicapra grimmia)",
+              "value": 2
+            },
+            {
+              "name": "Raphicerus campestris (Raphicerus campestris)",
+              "value": 2
+            },
+            {
+              "name": "Tragelaphus oryx (Tragelaphus oryx)",
+              "value": 2
+            },
+            {
+              "name": "Connochaetes (Connochaetes)",
+              "value": 2
+            },
+            {
+              "name": "Bovidae (Bovidae)",
+              "value": 2
+            },
+            {
+              "name": "Litocranius walleri (Litocranius walleri)",
+              "value": 2
+            },
+            {
+              "name": "Syncerus caffer (Syncerus caffer)",
+              "value": 2
+            },
+            {
+              "name": "Madoqua kirkii (Madoqua kirkii)",
+              "value": 2
+            },
+            {
+              "name": "Eudorcas thomsonii (Eudorcas thomsonii)",
+              "value": 2
+            },
+            {
+              "name": "Damaliscus korrigum (Damaliscus korrigum)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Suidae",
+          "children": [
+            {
+              "name": "Phacochoerus africanus (Phacochoerus africanus)",
+              "value": 6
+            },
+            {
+              "name": "Phacochoerus africanus (Phacochoerus africanus)",
+              "value": 6
+            },
+            {
+              "name": "Phacochoerus africanus (Phacochoerus africanus)",
+              "value": 6
+            }
+          ]
+        },
+        {
+          "name": "Scolopacidae",
+          "children": [
+            {
+              "name": "Calidris pugnax (Calidris pugnax)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Giraffidae",
+          "children": [
+            {
+              "name": "Giraffa tippelskirchi (Giraffa tippelskirchi)",
+              "value": 2
+            },
+            {
+              "name": "Giraffa camelopardalis (Giraffa camelopardalis)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Equidae",
+          "children": [
+            {
+              "name": "Equus grevyi (Equus grevyi)",
+              "value": 2
+            },
+            {
+              "name": "Equus quagga burchellii (Equus quagga burchellii)",
+              "value": 2
+            },
+            {
+              "name": "Equus (Equus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Rhinocerotidae",
+          "children": [
+            {
+              "name": "Diceros bicornis (Diceros bicornis)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Hippopotamidae",
+          "children": [
+            {
+              "name": "Hippopotamidae (Hippopotamidae)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Unknown",
+          "children": [
+            {
+              "name": "Mammalia (Mammalia)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Leporidae",
+          "children": [
+            {
+              "name": "Lepus (Lepus)",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "name": "Muridae",
+          "children": [
+            {
+              "name": "Rhabdomys pumilio (Rhabdomys pumilio)",
+              "value": 2
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
