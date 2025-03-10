@@ -142,26 +142,51 @@ const IlluminumStyledPredatorPreyTree = () => {
       const vizContainer = vizRef.current;
       vizContainer.innerHTML = ''; // More reliable clearing method in React
       
-      const width = 900;
-      const height = 900;
-      const radius = width / 2;
+      const width = 1350;
+      const height = 1350;
+      const radius = width / 1.5;
 
       // Create SVG element with proper namespace
-      const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svgElement.setAttribute("width", width);
-      svgElement.setAttribute("height", height);
-      svgElement.setAttribute("viewBox", `0 0 ${width} ${height}`);
-      svgElement.style.maxWidth = "100%";
-      svgElement.style.height = "auto";
-      vizContainer.appendChild(svgElement);
-      
-      // Create a group for centering the visualization
-      const gElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
-      gElement.setAttribute("transform", `translate(${width/2},${height/2})`);
-      svgElement.appendChild(gElement);
-      
-      // Now use D3 to select the elements we created
-      const svg = d3.select(gElement);
+const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+svgElement.setAttribute("width", width);
+svgElement.setAttribute("height", height);
+svgElement.setAttribute("viewBox", `0 0 ${width} ${height}`);
+svgElement.style.maxWidth = "100%";
+svgElement.style.height = "auto";
+vizContainer.appendChild(svgElement);
+
+// Select the SVG with D3 for adding drag behavior
+const svgSelection = d3.select(svgElement);
+
+// Create a group for centering the visualization
+const gElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
+gElement.setAttribute("transform", `translate(${width/2},${height/2})`);
+svgElement.appendChild(gElement);
+
+// Now use D3 to select the elements we created
+const svg = d3.select(gElement);
+
+// Add panning functionality
+const drag = d3.drag()
+  .on("start", dragStarted)
+  .on("drag", dragged);
+
+svgSelection.call(drag);
+
+// Current translation
+let dx = 0;
+let dy = 0;
+
+// Drag functions
+function dragStarted(event) {
+  event.sourceEvent.stopPropagation();
+}
+
+function dragged(event) {
+  dx += event.dx;
+  dy += event.dy;
+  gElement.setAttribute("transform", `translate(${width/2 + dx},${height/2 + dy})`);
+}
       
       // Create a radial tree layout
       const tree = d3.tree()
@@ -359,7 +384,7 @@ const IlluminumStyledPredatorPreyTree = () => {
       // Add title and subtitle in Illuminum brand style
       svg.append("text")
         .attr("x", 0)
-        .attr("y", -radius + 20)
+        .attr("y", -radius - 60)
         .attr("text-anchor", "middle")
         .style("font-family", "'Kanit', sans-serif")
         .style("font-size", "24px")
@@ -369,7 +394,7 @@ const IlluminumStyledPredatorPreyTree = () => {
         
       svg.append("text")
         .attr("x", 0)
-        .attr("y", -radius + 50)
+        .attr("y", -radius - 25)
         .attr("text-anchor", "middle")
         .style("font-family", "'Roboto', sans-serif")
         .style("font-size", "16px")
@@ -380,7 +405,7 @@ const IlluminumStyledPredatorPreyTree = () => {
       // Add instructions
       svg.append("text")
         .attr("x", 0)
-        .attr("y", radius - 40)
+        .attr("y", radius + 80)
         .attr("text-anchor", "middle")
         .style("font-family", "'Roboto', sans-serif")
         .style("font-size", "14px")
@@ -457,7 +482,7 @@ const IlluminumStyledPredatorPreyTree = () => {
         <div 
           ref={vizRef}
           className="overflow-auto p-4 border rounded-lg shadow-sm" 
-          style={{ width: "100%", height: "800px", maxWidth: "1000px", backgroundColor: brandColors.pureWhite, borderColor: brandColors.lightGrey }}
+          style={{ width: "100%", height: "1400px", maxWidth: "2000px", backgroundColor: brandColors.pureWhite, borderColor: brandColors.lightGrey }}
         ></div>
       )}
       
@@ -473,6 +498,12 @@ const IlluminumStyledPredatorPreyTree = () => {
             <h3 className="text-lg font-bold mb-2" style={{color: brandColors.darkPurple}}>About this Visualization</h3>
             <p className="mb-2">This radial tree shows predator-prey relationships between the selected predator and their prey species, based on data from the Global Biotic Interactions database (GloBI).</p>
             <p className="mb-2 print-text">The data was extracted using the rglobi R package and processed to categorize prey species by taxonomic family and class. Circle size indicates the relative frequency of each prey item in the database records.</p>
+            <p className="mb-2 text-sm font-medium" style={{color: brandColors.glacierBlue}}>
+  <svg className="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+  </svg> 
+  Tip: Click and drag to pan around the visualization.
+</p>
             <p className="text-sm italic" style={{color: brandColors.mediumGrey}}>Note: Select different predators from the dropdown menu and click "Fetch Fresh Data" to retrieve their prey networks from GloBI.</p>
           </div>
         </div>

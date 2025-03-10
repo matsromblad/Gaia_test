@@ -81595,6 +81595,15 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
     }
     console.log("Starting visualization with data:", data.name);
     try {
+      // Drag functions
+      var dragStarted = function dragStarted(event) {
+        event.sourceEvent.stopPropagation();
+      };
+      var dragged = function dragged(event) {
+        dx += event.dx;
+        dy += event.dy;
+        gElement.setAttribute("transform", "translate(".concat(width / 2 + dx, ",").concat(height / 2 + dy, ")"));
+      }; // Create a radial tree layout
       // Helper function to calculate radial points
       var radialPoint = function radialPoint(x, y) {
         return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
@@ -81603,9 +81612,9 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
       var vizContainer = vizRef.current;
       vizContainer.innerHTML = ''; // More reliable clearing method in React
 
-      var width = 900;
-      var height = 900;
-      var radius = width / 2;
+      var width = 1350;
+      var height = 1350;
+      var radius = width / 1.5;
 
       // Create SVG element with proper namespace
       var svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
@@ -81616,6 +81625,9 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
       svgElement.style.height = "auto";
       vizContainer.appendChild(svgElement);
 
+      // Select the SVG with D3 for adding drag behavior
+      var svgSelection = d3__WEBPACK_IMPORTED_MODULE_1__.select(svgElement);
+
       // Create a group for centering the visualization
       var gElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
       gElement.setAttribute("transform", "translate(".concat(width / 2, ",").concat(height / 2, ")"));
@@ -81624,7 +81636,13 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
       // Now use D3 to select the elements we created
       var svg = d3__WEBPACK_IMPORTED_MODULE_1__.select(gElement);
 
-      // Create a radial tree layout
+      // Add panning functionality
+      var drag = d3__WEBPACK_IMPORTED_MODULE_1__.drag().on("start", dragStarted).on("drag", dragged);
+      svgSelection.call(drag);
+
+      // Current translation
+      var dx = 0;
+      var dy = 0;
       var tree = d3__WEBPACK_IMPORTED_MODULE_1__.tree().size([2 * Math.PI, radius - 100]).separation(function (a, b) {
         return (a.parent === b.parent ? 1 : 2) / a.depth;
       });
@@ -81777,11 +81795,11 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
       });
 
       // Add title and subtitle in Illuminum brand style
-      svg.append("text").attr("x", 0).attr("y", -radius + 20).attr("text-anchor", "middle").style("font-family", "'Kanit', sans-serif").style("font-size", "24px").style("font-weight", "bold").style("fill", brandColors.darkPurple).text("".concat(data.name.split(' (')[0], " Prey Network"));
-      svg.append("text").attr("x", 0).attr("y", -radius + 50).attr("text-anchor", "middle").style("font-family", "'Roboto', sans-serif").style("font-size", "16px").style("font-style", "italic").style("fill", brandColors.mediumGrey).text("Data from Global Biotic Interactions (GloBI)");
+      svg.append("text").attr("x", 0).attr("y", -radius - 60).attr("text-anchor", "middle").style("font-family", "'Kanit', sans-serif").style("font-size", "24px").style("font-weight", "bold").style("fill", brandColors.darkPurple).text("".concat(data.name.split(' (')[0], " Prey Network"));
+      svg.append("text").attr("x", 0).attr("y", -radius - 25).attr("text-anchor", "middle").style("font-family", "'Roboto', sans-serif").style("font-size", "16px").style("font-style", "italic").style("fill", brandColors.mediumGrey).text("Data from Global Biotic Interactions (GloBI)");
 
       // Add instructions
-      svg.append("text").attr("x", 0).attr("y", radius - 40).attr("text-anchor", "middle").style("font-family", "'Roboto', sans-serif").style("font-size", "14px").style("font-style", "italic").style("fill", brandColors.mediumGrey).text("* Circle size indicates relative frequency in GloBI records");
+      svg.append("text").attr("x", 0).attr("y", radius + 80).attr("text-anchor", "middle").style("font-family", "'Roboto', sans-serif").style("font-size", "14px").style("font-style", "italic").style("fill", brandColors.mediumGrey).text("* Circle size indicates relative frequency in GloBI records");
       console.log("Visualization created successfully");
     } catch (vizError) {
       console.error("Error creating visualization:", vizError);
@@ -81870,8 +81888,8 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
     className: "overflow-auto p-4 border rounded-lg shadow-sm",
     style: {
       width: "100%",
-      height: "800px",
-      maxWidth: "1000px",
+      height: "1400px",
+      maxWidth: "2000px",
       backgroundColor: brandColors.pureWhite,
       borderColor: brandColors.lightGrey
     }
@@ -81906,6 +81924,22 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
   }, "This radial tree shows predator-prey relationships between the selected predator and their prey species, based on data from the Global Biotic Interactions database (GloBI)."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
     className: "mb-2 print-text"
   }, "The data was extracted using the rglobi R package and processed to categorize prey species by taxonomic family and class. Circle size indicates the relative frequency of each prey item in the database records."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
+    className: "mb-2 text-sm font-medium",
+    style: {
+      color: brandColors.glacierBlue
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", {
+    className: "inline-block w-4 h-4 mr-1",
+    fill: "none",
+    stroke: "currentColor",
+    viewBox: "0 0 24 24",
+    xmlns: "http://www.w3.org/2000/svg"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
+    strokeLinecap: "round",
+    strokeLinejoin: "round",
+    strokeWidth: "2",
+    d: "M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
+  })), "Tip: Click and drag to pan around the visualization."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
     className: "text-sm italic",
     style: {
       color: brandColors.mediumGrey
