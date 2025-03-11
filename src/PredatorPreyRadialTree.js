@@ -125,6 +125,22 @@ const IlluminumStyledPredatorPreyTree = () => {
     }
   };
 
+  // Helper function to extract scientific name for Wikipedia link
+  const extractScientificName = (nameString) => {
+    // Extract scientific name from format like "Common name (Scientific name)"
+    const match = nameString.match(/\(([^)]+)\)/);
+    if (match && match[1]) {
+      return match[1].trim();
+    }
+    // If no parentheses, return the whole string as it might be just the scientific name
+    return nameString.trim();
+  };
+
+  // Helper function to create Wikipedia URL
+  const getWikipediaUrl = (scientificName) => {
+    return `https://en.wikipedia.org/wiki/${encodeURIComponent(scientificName)}`;
+  };
+
   // This effect runs when data changes or the container is available
   useEffect(() => {
     if (!data || !vizRef.current) {
@@ -147,51 +163,56 @@ const IlluminumStyledPredatorPreyTree = () => {
       const radius = width / 1.5;
 
       // Create SVG element with proper namespace
-const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-svgElement.setAttribute("width", width);
-svgElement.setAttribute("height", height);
-svgElement.setAttribute("viewBox", `0 0 ${width} ${height}`);
-svgElement.style.maxWidth = "100%";
-svgElement.style.height = "auto";
-vizContainer.appendChild(svgElement);
+      const svgElement = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svgElement.setAttribute("width", width);
+      svgElement.setAttribute("height", height);
+      svgElement.setAttribute("viewBox", `0 0 ${width} ${height}`);
+      svgElement.style.maxWidth = "100%";
+      svgElement.style.height = "auto";
+      vizContainer.appendChild(svgElement);
 
-// Select the SVG with D3 for adding drag behavior
-const svgSelection = d3.select(svgElement);
+      // Select the SVG with D3 for adding drag behavior
+      const svgSelection = d3.select(svgElement);
 
-// Create a group for centering the visualization
-const gElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
-gElement.setAttribute("transform", `translate(${width/2},${height/2})`);
-svgElement.appendChild(gElement);
+      // Create a group for centering the visualization
+      const gElement = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      gElement.setAttribute("transform", `translate(${width/2},${height/2})`);
+      svgElement.appendChild(gElement);
 
-// Now use D3 to select the elements we created
-const svg = d3.select(gElement);
+      // Now use D3 to select the elements we created
+      const svg = d3.select(gElement);
 
-// Add panning functionality
-const drag = d3.drag()
-  .on("start", dragStarted)
-  .on("drag", dragged);
+      // Add panning functionality
+      const drag = d3.drag()
+        .on("start", dragStarted)
+        .on("drag", dragged);
 
-svgSelection.call(drag);
+      svgSelection.call(drag);
 
-// Current translation
-let dx = 0;
-let dy = 0;
+      // Current translation
+      let dx = 0;
+      let dy = 0;
 
-// Drag functions
-function dragStarted(event) {
-  event.sourceEvent.stopPropagation();
-}
+      // Drag functions
+      function dragStarted(event) {
+        event.sourceEvent.stopPropagation();
+      }
 
-function dragged(event) {
-  dx += event.dx;
-  dy += event.dy;
-  gElement.setAttribute("transform", `translate(${width/2 + dx},${height/2 + dy})`);
-}
+      function dragged(event) {
+        dx += event.dx;
+        dy += event.dy;
+        gElement.setAttribute("transform", `translate(${width/2 + dx},${height/2 + dy})`);
+      }
       
-      // Create a radial tree layout
+      // Helper function to calculate radial points
+      function radialPoint(x, y) {
+        return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
+      }
+      
+      // Create a radial tree layout with improved spacing
       const tree = d3.tree()
-        .size([2 * Math.PI, radius - 100])
-        .separation((a, b) => (a.parent === b.parent ? 1 : 2) / a.depth);
+        .size([2 * Math.PI, radius - 120])
+        .separation((a, b) => (a.parent === b.parent ? 1.1 : 2.2) / a.depth);
 
       // Convert hierarchical data
       const root = d3.hierarchy(data)
@@ -248,11 +269,6 @@ function dragged(event) {
 
       console.log("Links created, now adding nodes");
 
-      // Helper function to calculate radial points
-      function radialPoint(x, y) {
-        return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
-      }
-
       // Add nodes
       const node = svg.selectAll(".node")
         .data(root.descendants())
@@ -265,6 +281,32 @@ function dragged(event) {
           }
           return `translate(${radialPoint(d.x, d.y)})`;
         });
+
+      // Add node click handler for Wikipedia links
+      node.on("click", function(event, d) {
+        // Don't navigate if clicking on non-leaf kingdoms or families
+        if (d.depth === 1 || (d.depth === 2 && d.children)) {
+          return;
+        }
+        
+        const scientificName = extractScientificName(d.data.name);
+        const wikipediaUrl = getWikipediaUrl(scientificName);
+        
+        // Open Wikipedia in a new tab
+        window.open(wikipediaUrl, '_blank');
+        
+        // Prevent event bubbling
+        event.stopPropagation();
+      });
+
+      // Add cursor styling for clickable nodes
+      node.style("cursor", d => {
+        // Kingdoms and parent families aren't clickable
+        if (d.depth === 1 || (d.depth === 2 && d.children)) {
+          return "default";
+        }
+        return "pointer";
+      });
 
       // Special handling for root node (predator)
       node.filter(d => d.depth === 0)
@@ -329,22 +371,43 @@ function dragged(event) {
         .style("font-size", "12px")
         .style("fill", brandColors.pureWhite);
 
-      // Add labels to non-root nodes
-      node.filter(d => d.depth !== 0)
+      // Add labels to non-root nodes with different handling based on depth
+      const textLabels = node.filter(d => d.depth !== 0)
         .append("text")
-        .attr("dy", "0.31em")
+        .attr("dy", "0.31em");
+        
+      // Special handling for family/class nodes (depth 2)
+      textLabels.filter(d => d.depth === 2)
+        .attr("text-anchor", d => d.x < Math.PI ? "start" : "end")
+        .attr("x", d => d.x < Math.PI ? 12 : -12) // Offset to prevent collision
+        .attr("transform", d => `rotate(${(d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI})`)
+        .text(d => d.data.name)
+        .style("font-family", "'Roboto', sans-serif")
+        .style("font-size", "12px")
+        .style("font-weight", "bold")
+        .style("fill", d => {
+          const family = d.data.name;
+          const classType = familyClassMap[family] || "Unknown";
+          return classColorMap[classType];
+        })
+        // Add white outline to improve readability when crossing lines
+        .style("stroke", "#ffffff")
+        .style("stroke-width", 1)
+        .style("stroke-opacity", 0.7)
+        .style("paint-order", "stroke");
+      
+      // Handle other text labels (depth 1 and 3)
+      textLabels.filter(d => d.depth !== 2)
         .attr("x", d => (d.x < Math.PI === !d.children) ? 6 : -6)
         .attr("text-anchor", d => (d.x < Math.PI === !d.children) ? "start" : "end")
         .attr("transform", d => `rotate(${(d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI})`)
         .text(d => {
-          // Shorten long names
-          const name = d.data.name;
           if (d.depth === 3) {
-            // Extract common name from parenthesis
-            const match = name.match(/(.+?) \((.+?)\)/);
-            return match ? match[1] : name;
+            // Extract common name from parenthesis for species
+            const match = d.data.name.match(/(.+?) \((.+?)\)/);
+            return match ? match[1] : d.data.name;
           }
-          return name;
+          return d.data.name;
         })
         .style("font-family", d => {
           if (d.depth === 1) return "'Kanit', sans-serif";
@@ -352,11 +415,20 @@ function dragged(event) {
         })
         .style("font-size", d => {
           if (d.depth === 1) return "14px";
-          if (d.depth === 2) return "12px";
           return "10px";
         })
-        .style("font-weight", d => d.depth < 2 ? "bold" : "normal")
+        .style("font-weight", d => d.depth === 1 ? "bold" : "normal")
         .style("fill", brandColors.carbonBlack);
+
+      // Add visual indicator for clickable nodes
+      node.filter(d => d.depth >= 2 && (!d.children))
+        .append("circle")
+        .attr("class", "link-indicator")
+        .attr("r", 3)
+        .attr("cx", d => (d.x < Math.PI === !d.children) ? 3 : -3)
+        .attr("cy", -6)
+        .style("fill", brandColors.glacierBlue)
+        .style("opacity", 0.8);
 
       // Add legend
       const legend = svg.append("g")
@@ -380,6 +452,23 @@ function dragged(event) {
           .style("font-family", "'Roboto', sans-serif")
           .style("font-size", "15px");
       });
+
+      // Add legend for clickable nodes
+      const linkLegend = legend.append("g")
+        .attr("transform", `translate(0, ${classes.length * 25 + 20})`);
+
+      linkLegend.append("circle")
+        .attr("r", 4)
+        .attr("cx", 10)
+        .attr("cy", 10)
+        .style("fill", brandColors.glacierBlue);
+
+      linkLegend.append("text")
+        .attr("x", 30)
+        .attr("y", 15)
+        .text("Click for Wikipedia article")
+        .style("font-family", "'Roboto', sans-serif")
+        .style("font-size", "15px");
 
       // Add title and subtitle in Illuminum brand style
       svg.append("text")
@@ -412,6 +501,16 @@ function dragged(event) {
         .style("font-style", "italic")
         .style("fill", brandColors.mediumGrey)
         .text("* Circle size indicates relative frequency in GloBI records");
+
+      svg.append("text")
+        .attr("x", 0)
+        .attr("y", radius + 110)
+        .attr("text-anchor", "middle")
+        .style("font-family", "'Roboto', sans-serif")
+        .style("font-size", "14px")
+        .style("font-style", "italic")
+        .style("fill", brandColors.glacierBlue)
+        .text("Click on species to view Wikipedia article");
         
       console.log("Visualization created successfully");
     } catch (vizError) {
@@ -502,7 +601,7 @@ function dragged(event) {
   <svg className="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
   </svg> 
-  Tip: Click and drag to pan around the visualization.
+  Tip: Click and drag to pan around the visualization. Click on any species name to view its Wikipedia page.
 </p>
             <p className="text-sm italic" style={{color: brandColors.mediumGrey}}>Note: Select different predators from the dropdown menu and click "Fetch Fresh Data" to retrieve their prey networks from GloBI.</p>
           </div>
