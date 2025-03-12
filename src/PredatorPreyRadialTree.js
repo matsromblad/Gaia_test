@@ -7,7 +7,8 @@ const IlluminumStyledPredatorPreyTree = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedPredator, setSelectedPredator] = useState("Canis lupus");
-  const [availablePredators, setAvailablePredators] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchHistory, setSearchHistory] = useState([]);
   
   // Create a ref for the visualization container
   const vizRef = useRef(null);
@@ -26,13 +27,9 @@ const IlluminumStyledPredatorPreyTree = () => {
   };
 
   useEffect(() => {
-    // Initialize the list of available predators
-    setAvailablePredators([
-      { id: "Canis lupus", name: "Gray wolf (Canis lupus)" },
-      { id: "Canis latrans", name: "Coyote (Canis latrans)" },
-      { id: "Canis aureus", name: "Golden jackal (Canis aureus)" },
-      { id: "Vulpes vulpes", name: "Red fox (Vulpes vulpes)" },
-      { id: "Lycaon pictus", name: "African wild dog (Lycaon pictus)" }
+    // Initialize the search history with the default predator
+    setSearchHistory([
+      { id: "Canis lupus", name: "Gray wolf (Canis lupus)" }
     ]);
   }, []);
 
@@ -92,15 +89,58 @@ const IlluminumStyledPredatorPreyTree = () => {
     loadData();
   }, [selectedPredator]);
 
-  const handlePredatorChange = (e) => {
-    setSelectedPredator(e.target.value);
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
   };
 
-  const handlePredatorDataFetch = async () => {
+  const handleSearch = async (e) => {
+    e.preventDefault();
+    
+    if (!searchQuery.trim()) {
+      setError("Please enter a valid species name");
+      return;
+    }
+
     try {
+      // Clear the visualization container immediately
+      if (vizRef.current) {
+        vizRef.current.innerHTML = '';
+      }
+      
       setLoading(true);
+      setError(null);
+      
+      // Trigger the data fetch for the searched predator
+      await fetchPredatorData(searchQuery.trim());
+      
+      // Add the searched predator to search history if not already present
+      if (!searchHistory.some(item => item.id.toLowerCase() === searchQuery.trim().toLowerCase())) {
+        setSearchHistory(prev => [
+          { id: searchQuery.trim(), name: searchQuery.trim() },
+          ...prev.slice(0, 4) // Keep only the 5 most recent searches
+        ]);
+      }
+      
+      // Update the selected predator
+      setSelectedPredator(searchQuery.trim());
+      
+      // Clear the search query
+      setSearchQuery("");
+    } catch (err) {
+      console.error("Search failed:", err.message);
+      setError("Search failed: " + err.message);
+      setLoading(false);
+    }
+  };
+
+  const handleHistoryItemClick = (predatorId) => {
+    setSelectedPredator(predatorId);
+  };
+
+  const fetchPredatorData = async (predator) => {
+    try {
       // This would trigger the server-side R script to fetch new data for the selected predator
-      const response = await fetch(`/api/fetch-predator-data?predator=${selectedPredator}`, {
+      const response = await fetch(`/api/fetch-predator-data?predator=${encodeURIComponent(predator)}`, {
         method: 'POST'
       });
       
@@ -108,8 +148,14 @@ const IlluminumStyledPredatorPreyTree = () => {
         throw new Error(`Failed to trigger data fetch: ${response.statusText}`);
       }
       
+      const result = await response.json();
+      
+      if (!result.success) {
+        throw new Error(result.message || "Failed to fetch predator data");
+      }
+      
       // After successful trigger, reload the data
-      const jsonFilePath = `/data/${selectedPredator.replace(' ', '_')}_prey_hierarchy.json`;
+      const jsonFilePath = `/data/${predator.replace(' ', '_')}_prey_hierarchy.json`;
       const dataResponse = await fetch(jsonFilePath);
       
       if (!dataResponse.ok) {
@@ -119,9 +165,13 @@ const IlluminumStyledPredatorPreyTree = () => {
       const predatorData = await dataResponse.json();
       setData(predatorData);
       setLoading(false);
+      
+      return true;
     } catch (err) {
-      setError("Failed to fetch new predator data: " + err.message);
+      console.error("Failed to fetch predator data:", err);
+      setError("Failed to fetch predator data: " + err.message);
       setLoading(false);
+      throw err;
     }
   };
 
@@ -470,26 +520,6 @@ const IlluminumStyledPredatorPreyTree = () => {
         .style("font-family", "'Roboto', sans-serif")
         .style("font-size", "15px");
 
-      // Add title and subtitle in Illuminum brand style
-      svg.append("text")
-        .attr("x", 0)
-        .attr("y", -radius - 60)
-        .attr("text-anchor", "middle")
-        .style("font-family", "'Kanit', sans-serif")
-        .style("font-size", "24px")
-        .style("font-weight", "bold")
-        .style("fill", brandColors.darkPurple)
-        .text(`${data.name.split(' (')[0]} Prey Network`);
-        
-      svg.append("text")
-        .attr("x", 0)
-        .attr("y", -radius - 25)
-        .attr("text-anchor", "middle")
-        .style("font-family", "'Roboto', sans-serif")
-        .style("font-size", "16px")
-        .style("font-style", "italic")
-        .style("fill", brandColors.mediumGrey)
-        .text("Data from Global Biotic Interactions (GloBI)");
 
       // Add instructions
 
@@ -524,54 +554,89 @@ const IlluminumStyledPredatorPreyTree = () => {
   return (
     <div className="flex flex-col items-center p-4">
       <div className="w-full max-w-2xl mb-4">
-        <div className="flex flex-row justify-between items-center">
+        <div className="flex flex-col space-y-4">
           <h2 className="text-xl">Predator-Prey Network Visualization</h2>
-          <div className="flex space-x-4">
-            <div className="relative inline-block w-64">
-              <label htmlFor="predator-select" className="block text-sm font-medium mb-1" style={{color: brandColors.mediumGrey}}>
-                Select Predator:
-              </label>
-              <select
-                id="predator-select"
-                className="block w-full p-2 border rounded-md shadow-sm focus:outline-none"
-                value={selectedPredator}
-                onChange={handlePredatorChange}
+          
+          {/* Search form */}
+          <form onSubmit={handleSearch} className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+            <div className="flex-grow">
+              <input
+                type="text"
+                className="w-full p-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-opacity-50"
+                placeholder="Search for a species (scientific name)"
+                value={searchQuery}
+                onChange={handleSearchChange}
                 style={{borderColor: brandColors.lightGrey, color: brandColors.carbonBlack}}
-              >
-                {availablePredators.map(predator => (
-                  <option key={predator.id} value={predator.id}>
-                    {predator.name}
-                  </option>
-                ))}
-              </select>
+              />
             </div>
-
+            <button
+              type="submit"
+              className="px-4 py-2 rounded-md shadow-sm text-white"
+              style={{backgroundColor: brandColors.darkPurple}}
+              disabled={loading}
+            >
+              {loading ? "Searching..." : "Search"}
+            </button>
+          </form>
+          
+          {/* Current selection */}
+          <div className="text-sm font-medium" style={{color: brandColors.mediumGrey}}>
+            Currently viewing: <span style={{color: brandColors.darkPurple}}>{selectedPredator}</span>
+          </div>
+          
+          {/* Recent searches */}
+          {searchHistory.length > 0 && (
+            <div className="mt-2">
+              <div className="text-sm font-medium mb-1" style={{color: brandColors.mediumGrey}}>Recent searches:</div>
+              <div className="flex flex-wrap gap-2">
+                {searchHistory.map((item, index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleHistoryItemClick(item.id)}
+                    className="px-3 py-1 text-sm rounded-full"
+                    style={{
+                      backgroundColor: selectedPredator === item.id ? brandColors.darkPurple : brandColors.lightGrey,
+                      color: selectedPredator === item.id ? brandColors.pureWhite : brandColors.carbonBlack
+                    }}
+                  >
+                    {item.id}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          {/* Help text */}
+          <div className="text-xs mt-1" style={{color: brandColors.mediumGrey}}>
+            Enter a scientific name (e.g., "Panthera leo" for lions) to visualize their prey network
           </div>
         </div>
       </div>
       
-      {loading ? (
-        <div className="flex items-center justify-center h-64 text-lg font-medium" style={{color: brandColors.darkPurple}}>
-          <div className="flex flex-col items-center">
-            <svg className="animate-spin -ml-1 mr-3 h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-            </svg>
-            <span>Loading predation data from GloBI...</span>
+      <div className="relative w-full" style={{ height: "1400px", maxWidth: "2000px" }}>
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10">
+            <div className="flex flex-col items-center">
+              <svg className="animate-spin -ml-1 mr-3 h-10 w-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              <span className="text-lg font-medium" style={{color: brandColors.darkPurple}}>Loading relations data...</span>
+            </div>
           </div>
-        </div>
-      ) : error ? (
-        <div className="p-4 rounded" style={{backgroundColor: "#FEF2F2", color: brandColors.flamingRed}}>{error}</div>
-      ) : (
-        <div 
-          ref={vizRef}
-          className="overflow-auto p-4 border rounded-lg shadow-sm" 
-          style={{ width: "100%", height: "1400px", maxWidth: "2000px", backgroundColor: brandColors.pureWhite, borderColor: brandColors.lightGrey }}>
-        </div>
-      )
-      }
-    </div>
-  );
-};
+        )}
+        
+        {error ? (
+          <div className="p-4 rounded" style={{backgroundColor: "#FEF2F2", color: brandColors.flamingRed}}>{error}</div>
+        ) : (
+          <div 
+            ref={vizRef}
+            className="overflow-auto p-4 border rounded-lg shadow-sm h-full" 
+            style={{ width: "100%", backgroundColor: brandColors.pureWhite, borderColor: brandColors.lightGrey }}>
+          </div>
+        )}
 
+      </div></div>
+  );
+}
 export default IlluminumStyledPredatorPreyTree;
