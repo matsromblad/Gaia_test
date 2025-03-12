@@ -81584,6 +81584,22 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
     };
   }();
 
+  // Helper function to extract scientific name for Wikipedia link
+  var extractScientificName = function extractScientificName(nameString) {
+    // Extract scientific name from format like "Common name (Scientific name)"
+    var match = nameString.match(/\(([^)]+)\)/);
+    if (match && match[1]) {
+      return match[1].trim();
+    }
+    // If no parentheses, return the whole string as it might be just the scientific name
+    return nameString.trim();
+  };
+
+  // Helper function to create Wikipedia URL
+  var getWikipediaUrl = function getWikipediaUrl(scientificName) {
+    return "https://en.wikipedia.org/wiki/".concat(encodeURIComponent(scientificName));
+  };
+
   // This effect runs when data changes or the container is available
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(function () {
     if (!data || !vizRef.current) {
@@ -81603,11 +81619,10 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
         dx += event.dx;
         dy += event.dy;
         gElement.setAttribute("transform", "translate(".concat(width / 2 + dx, ",").concat(height / 2 + dy, ")"));
-      }; // Create a radial tree layout
-      // Helper function to calculate radial points
+      }; // Helper function to calculate radial points
       var radialPoint = function radialPoint(x, y) {
         return [(y = +y) * Math.cos(x -= Math.PI / 2), y * Math.sin(x)];
-      }; // Add nodes
+      }; // Create a radial tree layout with improved spacing
       // Get container and clear it completely
       var vizContainer = vizRef.current;
       vizContainer.innerHTML = ''; // More reliable clearing method in React
@@ -81643,8 +81658,8 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
       // Current translation
       var dx = 0;
       var dy = 0;
-      var tree = d3__WEBPACK_IMPORTED_MODULE_1__.tree().size([2 * Math.PI, radius - 100]).separation(function (a, b) {
-        return (a.parent === b.parent ? 1 : 2) / a.depth;
+      var tree = d3__WEBPACK_IMPORTED_MODULE_1__.tree().size([2 * Math.PI, radius - 120]).separation(function (a, b) {
+        return (a.parent === b.parent ? 1.1 : 2.2) / a.depth;
       });
 
       // Convert hierarchical data
@@ -81701,6 +81716,8 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
         return d.target.data.value ? Math.sqrt(d.target.data.value) / 2 : 1.5;
       }).style("stroke-opacity", 0.6);
       console.log("Links created, now adding nodes");
+
+      // Add nodes
       var node = svg.selectAll(".node").data(root.descendants()).join("g").attr("class", function (d) {
         return "node ".concat(d.children ? "node--internal" : "node--leaf");
       }).attr("transform", function (d) {
@@ -81709,6 +81726,31 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
           return "translate(0,0)"; // Position at center
         }
         return "translate(".concat(radialPoint(d.x, d.y), ")");
+      });
+
+      // Add node click handler for Wikipedia links
+      node.on("click", function (event, d) {
+        // Don't navigate if clicking on non-leaf kingdoms or families
+        if (d.depth === 1 || d.depth === 2 && d.children) {
+          return;
+        }
+        var scientificName = extractScientificName(d.data.name);
+        var wikipediaUrl = getWikipediaUrl(scientificName);
+
+        // Open Wikipedia in a new tab
+        window.open(wikipediaUrl, '_blank');
+
+        // Prevent event bubbling
+        event.stopPropagation();
+      });
+
+      // Add cursor styling for clickable nodes
+      node.style("cursor", function (d) {
+        // Kingdoms and parent families aren't clickable
+        if (d.depth === 1 || d.depth === 2 && d.children) {
+          return "default";
+        }
+        return "pointer";
       });
 
       // Special handling for root node (predator)
@@ -81756,34 +81798,63 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
         return match ? match[1] : ""; // Common name
       }).style("font-family", "'Roboto', sans-serif").style("font-size", "12px").style("fill", brandColors.pureWhite);
 
-      // Add labels to non-root nodes
-      node.filter(function (d) {
+      // Add labels to non-root nodes with different handling based on depth
+      var textLabels = node.filter(function (d) {
         return d.depth !== 0;
-      }).append("text").attr("dy", "0.31em").attr("x", function (d) {
+      }).append("text").attr("dy", "0.31em");
+
+      // Special handling for family/class nodes (depth 2)
+      textLabels.filter(function (d) {
+        return d.depth === 2;
+      }).attr("text-anchor", function (d) {
+        return d.x < Math.PI ? "start" : "end";
+      }).attr("x", function (d) {
+        return d.x < Math.PI ? 12 : -12;
+      }) // Offset to prevent collision
+      .attr("transform", function (d) {
+        return "rotate(".concat((d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI, ")");
+      }).text(function (d) {
+        return d.data.name;
+      }).style("font-family", "'Roboto', sans-serif").style("font-size", "12px").style("font-weight", "bold").style("fill", function (d) {
+        var family = d.data.name;
+        var classType = familyClassMap[family] || "Unknown";
+        return classColorMap[classType];
+      })
+      // Add white outline to improve readability when crossing lines
+      .style("stroke", "#ffffff").style("stroke-width", 1).style("stroke-opacity", 0.7).style("paint-order", "stroke");
+
+      // Handle other text labels (depth 1 and 3)
+      textLabels.filter(function (d) {
+        return d.depth !== 2;
+      }).attr("x", function (d) {
         return d.x < Math.PI === !d.children ? 6 : -6;
       }).attr("text-anchor", function (d) {
         return d.x < Math.PI === !d.children ? "start" : "end";
       }).attr("transform", function (d) {
         return "rotate(".concat((d.x < Math.PI ? d.x - Math.PI / 2 : d.x + Math.PI / 2) * 180 / Math.PI, ")");
       }).text(function (d) {
-        // Shorten long names
-        var name = d.data.name;
         if (d.depth === 3) {
-          // Extract common name from parenthesis
-          var match = name.match(/(.+?) \((.+?)\)/);
-          return match ? match[1] : name;
+          // Extract common name from parenthesis for species
+          var match = d.data.name.match(/(.+?) \((.+?)\)/);
+          return match ? match[1] : d.data.name;
         }
-        return name;
+        return d.data.name;
       }).style("font-family", function (d) {
         if (d.depth === 1) return "'Kanit', sans-serif";
         return "'Roboto', sans-serif";
       }).style("font-size", function (d) {
         if (d.depth === 1) return "14px";
-        if (d.depth === 2) return "12px";
         return "10px";
       }).style("font-weight", function (d) {
-        return d.depth < 2 ? "bold" : "normal";
+        return d.depth === 1 ? "bold" : "normal";
       }).style("fill", brandColors.carbonBlack);
+
+      // Add visual indicator for clickable nodes
+      node.filter(function (d) {
+        return d.depth >= 2 && !d.children;
+      }).append("circle").attr("class", "link-indicator").attr("r", 3).attr("cx", function (d) {
+        return d.x < Math.PI === !d.children ? 3 : -3;
+      }).attr("cy", -6).style("fill", brandColors.glacierBlue).style("opacity", 0.8);
 
       // Add legend
       var legend = svg.append("g").attr("transform", "translate(".concat(-radius + 50, ", ").concat(-radius + 50, ")"));
@@ -81794,12 +81865,18 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
         legendRow.append("text").attr("x", 30).attr("y", 15).text(className).style("font-family", "'Roboto', sans-serif").style("font-size", "15px");
       });
 
+      // Add legend for clickable nodes
+      var linkLegend = legend.append("g").attr("transform", "translate(0, ".concat(classes.length * 25 + 20, ")"));
+      linkLegend.append("circle").attr("r", 4).attr("cx", 10).attr("cy", 10).style("fill", brandColors.glacierBlue);
+      linkLegend.append("text").attr("x", 30).attr("y", 15).text("Click for Wikipedia article").style("font-family", "'Roboto', sans-serif").style("font-size", "15px");
+
       // Add title and subtitle in Illuminum brand style
       svg.append("text").attr("x", 0).attr("y", -radius - 60).attr("text-anchor", "middle").style("font-family", "'Kanit', sans-serif").style("font-size", "24px").style("font-weight", "bold").style("fill", brandColors.darkPurple).text("".concat(data.name.split(' (')[0], " Prey Network"));
       svg.append("text").attr("x", 0).attr("y", -radius - 25).attr("text-anchor", "middle").style("font-family", "'Roboto', sans-serif").style("font-size", "16px").style("font-style", "italic").style("fill", brandColors.mediumGrey).text("Data from Global Biotic Interactions (GloBI)");
 
       // Add instructions
       svg.append("text").attr("x", 0).attr("y", radius + 80).attr("text-anchor", "middle").style("font-family", "'Roboto', sans-serif").style("font-size", "14px").style("font-style", "italic").style("fill", brandColors.mediumGrey).text("* Circle size indicates relative frequency in GloBI records");
+      svg.append("text").attr("x", 0).attr("y", radius + 110).attr("text-anchor", "middle").style("font-family", "'Roboto', sans-serif").style("font-size", "14px").style("font-style", "italic").style("fill", brandColors.glacierBlue).text("Click on species to view Wikipedia article");
       console.log("Visualization created successfully");
     } catch (vizError) {
       console.error("Error creating visualization:", vizError);
@@ -81847,14 +81924,7 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
       key: predator.id,
       value: predator.id
     }, predator.name);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
-    onClick: handlePredatorDataFetch,
-    className: "px-4 py-2 rounded-md hover:opacity-90 focus:outline-none focus:ring-2",
-    style: {
-      backgroundColor: brandColors.glacierBlue,
-      color: brandColors.pureWhite
-    }
-  }, "Fetch Fresh Data")))), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  })))))), loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "flex items-center justify-center h-64 text-lg font-medium",
     style: {
       color: brandColors.darkPurple
@@ -81893,58 +81963,7 @@ var IlluminumStyledPredatorPreyTree = function IlluminumStyledPredatorPreyTree()
       backgroundColor: brandColors.pureWhite,
       borderColor: brandColors.lightGrey
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "mt-4 p-6 rounded max-w-2xl",
-    style: {
-      backgroundColor: "#F9FAFB"
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "flex items-start mb-4"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "mr-3 pt-1"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", {
-    width: "20",
-    height: "20",
-    viewBox: "0 0 24 24",
-    fill: "none",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
-    d: "M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z",
-    stroke: brandColors.darkPurple,
-    strokeWidth: "2",
-    strokeLinecap: "round",
-    strokeLinejoin: "round"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h3", {
-    className: "text-lg font-bold mb-2",
-    style: {
-      color: brandColors.darkPurple
-    }
-  }, "About this Visualization"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-    className: "mb-2"
-  }, "This radial tree shows predator-prey relationships between the selected predator and their prey species, based on data from the Global Biotic Interactions database (GloBI)."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-    className: "mb-2 print-text"
-  }, "The data was extracted using the rglobi R package and processed to categorize prey species by taxonomic family and class. Circle size indicates the relative frequency of each prey item in the database records."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-    className: "mb-2 text-sm font-medium",
-    style: {
-      color: brandColors.glacierBlue
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("svg", {
-    className: "inline-block w-4 h-4 mr-1",
-    fill: "none",
-    stroke: "currentColor",
-    viewBox: "0 0 24 24",
-    xmlns: "http://www.w3.org/2000/svg"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("path", {
-    strokeLinecap: "round",
-    strokeLinejoin: "round",
-    strokeWidth: "2",
-    d: "M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"
-  })), "Tip: Click and drag to pan around the visualization."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-    className: "text-sm italic",
-    style: {
-      color: brandColors.mediumGrey
-    }
-  }, "Note: Select different predators from the dropdown menu and click \"Fetch Fresh Data\" to retrieve their prey networks from GloBI.")))));
+  }));
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (IlluminumStyledPredatorPreyTree);
 

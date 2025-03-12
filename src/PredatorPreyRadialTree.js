@@ -492,15 +492,6 @@ const IlluminumStyledPredatorPreyTree = () => {
         .text("Data from Global Biotic Interactions (GloBI)");
 
       // Add instructions
-      svg.append("text")
-        .attr("x", 0)
-        .attr("y", radius + 80)
-        .attr("text-anchor", "middle")
-        .style("font-family", "'Roboto', sans-serif")
-        .style("font-size", "14px")
-        .style("font-style", "italic")
-        .style("fill", brandColors.mediumGrey)
-        .text("* Circle size indicates relative frequency in GloBI records");
 
       svg.append("text")
         .attr("x", 0)
@@ -554,13 +545,7 @@ const IlluminumStyledPredatorPreyTree = () => {
                 ))}
               </select>
             </div>
-            <button
-              onClick={handlePredatorDataFetch}
-              className="px-4 py-2 rounded-md hover:opacity-90 focus:outline-none focus:ring-2"
-              style={{backgroundColor: brandColors.glacierBlue, color: brandColors.pureWhite}}
-            >
-              Fetch Fresh Data
-            </button>
+
           </div>
         </div>
       </div>
@@ -581,32 +566,10 @@ const IlluminumStyledPredatorPreyTree = () => {
         <div 
           ref={vizRef}
           className="overflow-auto p-4 border rounded-lg shadow-sm" 
-          style={{ width: "100%", height: "1400px", maxWidth: "2000px", backgroundColor: brandColors.pureWhite, borderColor: brandColors.lightGrey }}
-        ></div>
-      )}
-      
-      <div className="mt-4 p-6 rounded max-w-2xl" style={{backgroundColor: "#F9FAFB"}}>
-        <div className="flex items-start mb-4">
-          <div className="mr-3 pt-1">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 16V12M12 8H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" 
-                stroke={brandColors.darkPurple} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
-          <div>
-            <h3 className="text-lg font-bold mb-2" style={{color: brandColors.darkPurple}}>About this Visualization</h3>
-            <p className="mb-2">This radial tree shows predator-prey relationships between the selected predator and their prey species, based on data from the Global Biotic Interactions database (GloBI).</p>
-            <p className="mb-2 print-text">The data was extracted using the rglobi R package and processed to categorize prey species by taxonomic family and class. Circle size indicates the relative frequency of each prey item in the database records.</p>
-            <p className="mb-2 text-sm font-medium" style={{color: brandColors.glacierBlue}}>
-  <svg className="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
-  </svg> 
-  Tip: Click and drag to pan around the visualization. Click on any species name to view its Wikipedia page.
-</p>
-            <p className="text-sm italic" style={{color: brandColors.mediumGrey}}>Note: Select different predators from the dropdown menu and click "Fetch Fresh Data" to retrieve their prey networks from GloBI.</p>
-          </div>
+          style={{ width: "100%", height: "1400px", maxWidth: "2000px", backgroundColor: brandColors.pureWhite, borderColor: brandColors.lightGrey }}>
         </div>
-      </div>
+      )
+      }
     </div>
   );
 };
