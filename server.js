@@ -1,6 +1,7 @@
 const express = require('express');
 const { exec } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -10,7 +11,21 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files
 app.use(express.static('public'));
-app.use('/data', express.static('public/data'));
+
+// IMPORTANT: Create a route to serve files from the writable tmp directory
+// This allows the frontend to access files written to /tmp/data
+app.use('/data', express.static('/tmp/data'));
+
+// Create the data directory in the writable /tmp folder if it doesn't exist
+const dataDir = '/tmp/data';
+try {
+  if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+    console.log(`Created data directory at ${dataDir}`);
+  }
+} catch (error) {
+  console.error('Error creating data directory:', error);
+}
 
 // API endpoint to fetch fresh data for a predator
 app.post('/api/fetch-predator-data', (req, res) => {
@@ -33,23 +48,11 @@ app.post('/api/fetch-predator-data', (req, res) => {
     });
   }
   
-  // Create the data directory if it doesn't exist
-  const dataDir = path.join(__dirname, 'public', 'data');
-  const { execSync } = require('child_process');
-  try {
-    execSync(`mkdir -p "${dataDir}"`);
-  } catch (error) {
-    console.error('Error creating data directory:', error);
-  }
-  
   // Set a timeout for the R script (10 minutes)
   const timeout = 600000;
   
-  // Execute R script with the predator taxon - use appropriate path formats
-  const isWindows = process.platform === 'win32';
-  const dataPath = isWindows ? "public\\data" : "public/data";
-  
-  const command = `Rscript wolf-prey-network-real-data.r "${sanitizedPredator}" "${dataPath}"`;
+  // Execute R script with the predator taxon, pointing to the writable /tmp/data directory
+  const command = `Rscript wolf-prey-network-real-data.r "${sanitizedPredator}" "/tmp/data"`;
   
   const childProcess = exec(command, { timeout }, (error, stdout, stderr) => {
     if (error) {
@@ -91,7 +94,6 @@ app.post('/api/fetch-predator-data', (req, res) => {
       `${sanitizedPredator.replace(' ', '_')}_prey_hierarchy.json`
     );
     
-    const fs = require('fs');
     if (!fs.existsSync(outputFilePath)) {
       return res.status(404).json({ 
         success: false, 
@@ -140,6 +142,28 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+// Add a startup task to copy any existing files into the tmp directory if needed
+// This is helpful when testing locally or when you have default data files
+const copyDefaultDataFiles = () => {
+  try {
+    const defaultDataDir = path.join(__dirname, 'public', 'data');
+    if (fs.existsSync(defaultDataDir)) {
+      const files = fs.readdirSync(defaultDataDir);
+      files.forEach(file => {
+        const sourcePath = path.join(defaultDataDir, file);
+        const destPath = path.join(dataDir, file);
+        if (!fs.existsSync(destPath)) {
+          fs.copyFileSync(sourcePath, destPath);
+          console.log(`Copied ${file} to ${dataDir}`);
+        }
+      });
+    }
+  } catch (error) {
+    console.error('Error copying default data files:', error);
+  }
+};
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  copyDefaultDataFiles();
 });
