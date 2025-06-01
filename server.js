@@ -3,7 +3,7 @@ const { exec } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8089;
 
 // Add JSON body parser
 app.use(express.json());
