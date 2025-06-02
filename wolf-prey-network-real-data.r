@@ -66,7 +66,7 @@ has_parameter <- function(func_name, param_name) {
 # Function to fetch predator prey data and create JSON structure
 fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir = ".") {
   cat("\n==================================================\n")
-  cat("Fetching prey data for", predator_taxon, "\n")
+  cat("Fetching interaction data for", predator_taxon, "\n")
   cat("==================================================\n")
   
   # Get common name for the predator
@@ -86,41 +86,41 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
   # Check if get_interactions_by_taxa supports the limit parameter
   can_use_limit <- has_parameter("get_interactions_by_taxa", "limit")
   
-  # Fetch predation data from GloBI with "preysOn" interaction
-  cat("Attempting to fetch data with 'preysOn' interaction type...\n")
-  if (can_use_limit) {
-    predator_prey_data <- get_interactions_by_taxa(sourcetaxon = predator_taxon, 
-                                                 interactiontype = "preysOn",
-                                                 limit = 1000)
-  } else {
-    predator_prey_data <- get_interactions_by_taxa(sourcetaxon = predator_taxon, 
-                                                 interactiontype = "preysOn")
-  }
+  # Initialize empty data frame for all interactions
+  all_interactions <- data.frame()
   
-  # Check if data was retrieved successfully
-  if(nrow(predator_prey_data) == 0) {
-    cat("No predation data found with 'preysOn', trying with 'eats' interaction type...\n")
-    # Try with "eats" if "preysOn" returns no results
+  # Define interaction types to fetch
+  interaction_types <- c("preysOn", "eats", "pollinates")
+  
+  # Fetch data for each interaction type
+  for(interaction_type in interaction_types) {
+    cat("Attempting to fetch data with '", interaction_type, "' interaction type...\n")
     if (can_use_limit) {
-      predator_prey_data <- get_interactions_by_taxa(sourcetaxon = predator_taxon, 
-                                                   interactiontype = "eats",
-                                                   limit = 1000)
+      interaction_data <- get_interactions_by_taxa(sourcetaxon = predator_taxon, 
+                                                 interactiontype = interaction_type,
+                                                 limit = 1000)
     } else {
-      predator_prey_data <- get_interactions_by_taxa(sourcetaxon = predator_taxon, 
-                                                   interactiontype = "eats")
+      interaction_data <- get_interactions_by_taxa(sourcetaxon = predator_taxon, 
+                                                 interactiontype = interaction_type)
+    }
+    
+    if(nrow(interaction_data) > 0) {
+      # Add interaction type column
+      interaction_data$interaction_type <- interaction_type
+      all_interactions <- rbind(all_interactions, interaction_data)
     }
   }
   
   # Data cleaning and processing
-  if(nrow(predator_prey_data) > 0) {
-    cat("Found", nrow(predator_prey_data), "prey interactions for", predator_taxon, "\n")
+  if(nrow(all_interactions) > 0) {
+    cat("Found", nrow(all_interactions), "total interactions for", predator_taxon, "\n")
     
     # Select relevant columns
-    prey_data <- predator_prey_data %>%
-      select(target_taxon_name, target_taxon_path) %>%
+    prey_data <- all_interactions %>%
+      select(target_taxon_name, target_taxon_path, interaction_type) %>%
       distinct()
     
-    cat("Processing", nrow(prey_data), "unique prey species\n")
+    cat("Processing", nrow(prey_data), "unique target species\n")
     
     # Create data frame to store taxonomic information
     taxonomy_data <- data.frame(
@@ -130,13 +130,15 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
       order = character(0),
       family = character(0),
       scientific_name = character(0),
+      interaction_type = character(0),
       stringsAsFactors = FALSE
     )
     
-    # Process each prey species
+    # Process each target species
     for(i in 1:nrow(prey_data)) {
       species_name <- prey_data$target_taxon_name[i]
-      cat("Processing species", i, "of", nrow(prey_data), ":", species_name, "\n")
+      interaction_type <- prey_data$interaction_type[i]
+      cat("Processing species", i, "of", nrow(prey_data), ":", species_name, "(", interaction_type, ")\n")
       
       # Try to get taxonomy from taxize
       tax_info <- get_taxonomy(species_name)
@@ -162,6 +164,7 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
           order = order,
           family = family,
           scientific_name = species_name,
+          interaction_type = interaction_type,
           stringsAsFactors = FALSE
         ))
         
@@ -193,6 +196,7 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
             order = order,
             family = family,
             scientific_name = species_name,
+            interaction_type = interaction_type,
             stringsAsFactors = FALSE
           ))
           
@@ -207,20 +211,21 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
             order = "Unknown",
             family = "Unknown",
             scientific_name = species_name,
+            interaction_type = interaction_type,
             stringsAsFactors = FALSE
           ))
         }
       }
     }
     
-    # Count occurrences of each prey species to use as a value for visualization weight
-    prey_counts <- predator_prey_data %>%
-      group_by(target_taxon_name) %>%
+    # Count occurrences of each target species to use as a value for visualization weight
+    interaction_counts <- all_interactions %>%
+      group_by(target_taxon_name, interaction_type) %>%
       summarize(count = n()) %>%
       rename(species = target_taxon_name)
     
     # Join taxonomy data with counts
-    prey_data_complete <- left_join(taxonomy_data, prey_counts, by = "species")
+    prey_data_complete <- left_join(taxonomy_data, interaction_counts, by = c("species", "interaction_type"))
     
     # Replace NA counts with 1
     prey_data_complete$count[is.na(prey_data_complete$count)] <- 1
@@ -240,7 +245,7 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
     prey_data_filtered <- prey_data_filtered %>%
       arrange(desc(count))
     
-    cat("After filtering, found", nrow(prey_data_filtered), "animal prey species\n")
+    cat("After filtering, found", nrow(prey_data_filtered), "target species\n")
     
     # Create hierarchical JSON structure for visualization
     hierarchy <- list(
@@ -264,7 +269,8 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
         for(i in 1:nrow(family_data)) {
           species_item <- list(
             name = paste0(family_data$species[i], " (", family_data$species[i], ")"),
-            value = as.numeric(family_data$count[i])
+            value = as.numeric(family_data$count[i]),
+            interaction_type = family_data$interaction_type[i]  # Add interaction type to the visualization
           )
           family_children[[length(family_children) + 1]] <- species_item
         }
@@ -298,19 +304,20 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
     cat("Data saved to", output_path, "\n")
     
     # Output some statistics
-    cat("\nSummary of", predator_taxon, "Prey Data:\n")
-    cat("Total prey species found:", nrow(prey_data_filtered), "\n")
+    cat("\nSummary of", predator_taxon, "Interaction Data:\n")
+    cat("Total target species found:", nrow(prey_data_filtered), "\n")
     cat("Kingdoms represented:", paste(unique_kingdoms, collapse = ", "), "\n")
     cat("Number of families:", length(unique(prey_data_filtered$family)), "\n")
-    cat("Top 5 prey species by frequency:\n")
+    cat("Interaction types:", paste(unique(prey_data_filtered$interaction_type), collapse = ", "), "\n")
+    cat("Top 5 target species by frequency:\n")
     top_prey <- prey_data_filtered %>% 
-      select(species, family, count) %>% 
+      select(species, family, interaction_type, count) %>% 
       head(5)
     print(top_prey)
     
     return(TRUE)
   } else {
-    cat("No predation data found in GloBI database for", predator_taxon, "\n")
+    cat("No interaction data found in GloBI database for", predator_taxon, "\n")
     return(FALSE)
   }
 }

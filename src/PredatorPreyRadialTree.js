@@ -283,6 +283,13 @@ const IlluminumStyledPredatorPreyTree = () => {
         "Unknown": brandColors.mediumGrey
       };
 
+      // Add interaction type color mapping
+      const interactionColorMap = {
+        "preysOn": brandColors.flamingRed,
+        "eats": brandColors.grassGreen,
+        "pollinates": brandColors.sunriseYellow
+      };
+
       // Infer class from family for better categorization
       const familyClassMap = {};
       const mammalFamilies = ["Cervidae", "Bovidae", "Leporidae", "Castoridae", "Suidae", "Cricetidae", "Canidae", "Mustelidae", "Sciuridae"];
@@ -303,19 +310,26 @@ const IlluminumStyledPredatorPreyTree = () => {
           .radius(d => d.y))
         .style("fill", "none")
         .style("stroke", d => {
-          if (d.target.depth === 2) {
+          if (d.target.depth === 3) {
+            // For species nodes, use interaction type color
+            const interactionType = d.target.data.interaction_type;
+            return interactionColorMap[interactionType] || brandColors.mediumGrey;
+          } else if (d.target.depth === 2) {
             const family = d.target.data.name;
-            const classType = familyClassMap[family] || "Unknown";
-            return classColorMap[classType];
-          } else if (d.target.depth === 3) {
-            const family = d.target.parent.data.name;
             const classType = familyClassMap[family] || "Unknown";
             return classColorMap[classType];
           }
           return brandColors.lightGrey;
         })
         .style("stroke-width", d => d.target.data.value ? Math.sqrt(d.target.data.value) / 2 : 1.5)
-        .style("stroke-opacity", 0.6);
+        .style("stroke-opacity", 0.6)
+        .style("stroke-dasharray", d => {
+          if (d.target.depth === 3) {
+            const interactionType = d.target.data.interaction_type;
+            return interactionType === "pollinates" ? "5,5" : "none";
+          }
+          return "none";
+        });
 
       console.log("Links created, now adding nodes");
 
@@ -503,9 +517,32 @@ const IlluminumStyledPredatorPreyTree = () => {
           .style("font-size", "15px");
       });
 
+      // Add interaction type legend
+      const interactionTypes = ["preysOn", "eats", "pollinates"];
+      interactionTypes.forEach((type, i) => {
+        const legendRow = legend.append("g")
+          .attr("transform", `translate(0, ${(classes.length + i) * 25})`);
+          
+        legendRow.append("line")
+          .attr("x1", 0)
+          .attr("y1", 10)
+          .attr("x2", 20)
+          .attr("y2", 10)
+          .style("stroke", interactionColorMap[type])
+          .style("stroke-width", 2)
+          .style("stroke-dasharray", type === "pollinates" ? "5,5" : "none");
+          
+        legendRow.append("text")
+          .attr("x", 30)
+          .attr("y", 15)
+          .text(type)
+          .style("font-family", "'Roboto', sans-serif")
+          .style("font-size", "15px");
+      });
+
       // Add legend for clickable nodes
       const linkLegend = legend.append("g")
-        .attr("transform", `translate(0, ${classes.length * 25 + 20})`);
+        .attr("transform", `translate(0, ${(classes.length + interactionTypes.length) * 25 + 20})`);
 
       linkLegend.append("circle")
         .attr("r", 4)
