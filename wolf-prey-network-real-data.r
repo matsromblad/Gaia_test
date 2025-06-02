@@ -198,8 +198,8 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
           
           cat("  Added taxonomy from path: Kingdom:", kingdom, "- Class:", class, "- Family:", family, "\n")
         } else {
-          # If all else fails, add with unknown taxonomy
-          cat("  No taxonomy data available, using Unknown\n")
+          # If no taxonomy information is available at all, add with Unknown values
+          cat("  No taxonomy information available, adding as Unknown\n")
           taxonomy_data <- rbind(taxonomy_data, data.frame(
             species = species_name,
             kingdom = "Unknown",
@@ -229,7 +229,8 @@ fetch_predator_prey_data <- function(predator_taxon = "Canis lupus", output_dir 
     animal_kingdoms <- c("Animalia", "Metazoa")
     prey_data_filtered <- prey_data_complete %>%
       filter(kingdom %in% animal_kingdoms | 
-             class %in% c("Mammalia", "Aves", "Actinopterygii", "Reptilia", "Amphibia"))
+             class %in% c("Mammalia", "Aves", "Actinopterygii", "Reptilia", "Amphibia") |
+             kingdom == "Unknown" | class == "Unknown")  # Include Unknown classifications
     
     # If kingdom is unknown but class is known animal class, assign to Animalia
     prey_data_filtered$kingdom[prey_data_filtered$kingdom == "Unknown" & 
